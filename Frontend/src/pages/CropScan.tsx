@@ -153,7 +153,7 @@ const CropScan = () => {
               <span className="material-symbols-outlined text-sm">{isSpeaking ? 'stop' : 'volume_up'}</span>
               {isSpeaking ? 'Stop Voice' : 'Read Analysis'}
             </button>
-            <Link to="/feature/supplies" className="mt-4 inline-flex items-center gap-2 border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors">
+            <Link to="/supplies" className="mt-4 inline-flex items-center gap-2 border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors">
               {t('cropScan.orderSupplies')}
               <span className="material-symbols-outlined text-sm">arrow_forward</span>
             </Link>

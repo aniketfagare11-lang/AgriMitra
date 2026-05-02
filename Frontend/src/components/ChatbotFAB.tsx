@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Mic, Volume2, MicOff, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -9,6 +10,7 @@ interface Message {
 
 const ChatbotFAB: React.FC = () => {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: t('Hello! How can I help you today?', 'Hello! How can I help you today?') }
@@ -168,6 +170,10 @@ const ChatbotFAB: React.FC = () => {
       setIsTyping(false);
     }
   };
+
+  if (['/', '/login', '/signup'].includes(location.pathname)) {
+    return null;
+  }
 
   return (
     <>
