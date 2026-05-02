@@ -7,7 +7,7 @@ const COMMANDS = [
   { keywords: ['scan', 'crop', 'फसल', 'ಬೆಳೆ', 'पीक'], path: '/crop-scan' },
   { keywords: ['weather', 'मौसम', 'ಹವಾಮಾನ', 'हवामान'], path: '/weather' },
   { keywords: ['farm', 'खेत', 'ಕೃಷಿ', 'शेती'], path: '/farm' },
-  { keywords: ['home', 'होम', 'ಮನೆ', 'मुख्य'], path: '/' },
+  { keywords: ['home', 'होम', 'ಮನೆ', 'मुख्य'], path: '/home' },
 ];
 
 const getSpeechRecognition = () =>
@@ -81,7 +81,7 @@ const VoiceNavigator = ({ language = 'en-IN' }) => {
           let reply = "Opening " + command.path.replace('/', '');
           if (command.path === '/soil-scan') reply = "Opening Soil Scan";
           if (command.path === '/crop-scan') reply = "Opening Crop Scan";
-          if (command.path === '/') reply = "Opening Home";
+          if (command.path === '/home') reply = "Opening Home";
           if (command.path === '/farm') reply = "Opening Farm Manager";
           if (command.path === '/weather') reply = "Opening Weather";
           

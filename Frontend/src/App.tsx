@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Splash from './pages/Splash';
@@ -10,9 +9,18 @@ import FarmManager from './pages/FarmManager';
 import Profile from './pages/Profile';
 import SoilScan from './pages/SoilScan';
 import CropScan from './pages/CropScan';
-import FeaturePlaceholder from './pages/FeaturePlaceholder';
 import VoiceNavigator from './components/VoiceNavigator.jsx';
 import ChatbotFAB from './components/ChatbotFAB';
+
+// Real feature pages
+import GovtSchemes from './pages/GovtSchemes';
+import WeatherAlerts from './pages/WeatherAlerts';
+import MarketPrices from './pages/MarketPrices';
+import History from './pages/History';
+import LanguageSettings from './pages/LanguageSettings';
+import Help from './pages/Help';
+import MyProfile from './pages/MyProfile';
+import Supplies from './pages/Supplies';
 
 const getVoiceLanguage = (lang: string) => {
   const base = lang.split('-')[0];
@@ -34,14 +42,39 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/scan" element={<Navigate to="/crop-scan" replace />} />
-        <Route path="/weather" element={<Navigate to="/feature/weather-alerts" replace />} />
+        <Route path="/scan" element={<Scan />} />
+        
+        {/* Features replacing placeholders */}
+        <Route path="/feature/weather-alerts" element={<Navigate to="/weather-alerts" replace />} />
+        <Route path="/weather-alerts" element={<WeatherAlerts />} />
+        
+        <Route path="/feature/govt-schemes" element={<Navigate to="/govt-schemes" replace />} />
+        <Route path="/govt-schemes" element={<GovtSchemes />} />
+        
+        <Route path="/feature/market-prices" element={<Navigate to="/market-prices" replace />} />
+        <Route path="/market-prices" element={<MarketPrices />} />
+        
+        <Route path="/feature/history" element={<Navigate to="/history" replace />} />
+        <Route path="/history" element={<History />} />
+        
+        <Route path="/feature/language-settings" element={<Navigate to="/language-settings" replace />} />
+        <Route path="/language-settings" element={<LanguageSettings />} />
+        
+        <Route path="/feature/help" element={<Navigate to="/help" replace />} />
+        <Route path="/help" element={<Help />} />
+        
+        <Route path="/feature/my-profile" element={<Navigate to="/my-profile" replace />} />
+        <Route path="/my-profile" element={<MyProfile />} />
+
+        <Route path="/feature/supplies" element={<Navigate to="/supplies" replace />} />
+        <Route path="/supplies" element={<Supplies />} />
+
+        {/* Core Pages */}
         <Route path="/farm" element={<Navigate to="/farm-manager" replace />} />
         <Route path="/soil-scan" element={<SoilScan />} />
         <Route path="/crop-scan" element={<CropScan />} />
         <Route path="/farm-manager" element={<FarmManager />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/feature/:featureId" element={<FeaturePlaceholder />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

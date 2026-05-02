@@ -53,7 +53,7 @@ const Profile = () => {
 
         {/* Menu Grid (Glassmorphism Cards) */}
         <section className="flex flex-col gap-unit">
-          <Link to="/feature/my-profile" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
+          <Link to="/my-profile" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
             <div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-primary mr-4 group-hover:scale-105 transition-transform">
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>person</span>
             </div>
@@ -63,7 +63,7 @@ const Profile = () => {
             <span className="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
           </Link>
           
-          <Link to="/feature/history" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
+          <Link to="/history" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
             <div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-secondary mr-4 group-hover:scale-105 transition-transform">
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>history</span>
             </div>
@@ -73,7 +73,7 @@ const Profile = () => {
             <span className="material-symbols-outlined text-outline-variant group-hover:text-secondary transition-colors">chevron_right</span>
           </Link>
           
-          <Link to="/feature/govt-schemes" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
+          <Link to="/govt-schemes" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
             <div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-tertiary mr-4 group-hover:scale-105 transition-transform">
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>account_balance</span>
             </div>
@@ -83,7 +83,7 @@ const Profile = () => {
             <span className="material-symbols-outlined text-outline-variant group-hover:text-tertiary transition-colors">chevron_right</span>
           </Link>
           
-          <Link to="/feature/language-settings" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
+          <Link to="/language-settings" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
             <div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-primary mr-4 group-hover:scale-105 transition-transform">
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>translate</span>
             </div>
@@ -93,7 +93,7 @@ const Profile = () => {
             <span className="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
           </Link>
           
-          <Link to="/feature/help" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
+          <Link to="/help" className="flex items-center p-card-padding bg-surface-container/80 backdrop-blur-[20px] border border-[rgba(240,253,250,0.05)] rounded-xl hover:bg-surface-container-high transition-colors group">
             <div className="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-outline mr-4 group-hover:scale-105 transition-transform">
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>help</span>
             </div>

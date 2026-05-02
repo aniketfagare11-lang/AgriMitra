@@ -8,12 +8,39 @@ const FarmManager = () => {
   const [isSyncing, setIsSyncing] = useState(false);
   const [lastSynced, setLastSynced] = useState<string | null>(null);
 
-  const handleSync = () => {
+  const [district, setDistrict] = useState('Pune');
+  const [taluka, setTaluka] = useState('Baramati');
+  const [village, setVillage] = useState('Malegaon Bk');
+  const [gatNo, setGatNo] = useState('452/B');
+  const [area, setArea] = useState('2.5');
+  const [crop] = useState('Sugarcane');
+
+  const handleSync = async () => {
     setIsSyncing(true);
-    setTimeout(() => {
-      setIsSyncing(false);
+    try {
+      const token = localStorage.getItem('token');
+      const userStr = localStorage.getItem('user');
+      const farmerName = userStr ? JSON.parse(userStr).name : 'Unknown Farmer';
+
+      await fetch('http://localhost:5000/api/farm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({
+          farmerName,
+          district,
+          crop,
+          areaHectares: parseFloat(area) || 0
+        })
+      });
       setLastSynced(new Date().toLocaleTimeString());
-    }, 2000);
+    } catch (err) {
+      console.error('Failed to sync', err);
+    } finally {
+      setIsSyncing(false);
+    }
   };
 
   return (
@@ -43,7 +70,7 @@ const FarmManager = () => {
             <div className="grid grid-cols-2 gap-gutter relative z-10">
               <div className="flex flex-col gap-2">
                 <label className="font-label-sm text-label-sm text-on-surface-variant">District</label>
-                <select className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full appearance-none">
+                <select value={district} onChange={e => setDistrict(e.target.value)} className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full appearance-none">
                   <option>Pune</option>
                   <option>Nashik</option>
                   <option>Satara</option>
@@ -51,24 +78,26 @@ const FarmManager = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-label-sm text-label-sm text-on-surface-variant">Taluka</label>
-                <select className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full appearance-none">
+                <select value={taluka} onChange={e => setTaluka(e.target.value)} className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full appearance-none">
                   <option>Baramati</option>
                   <option>Haveli</option>
+                  <option>Nashik City</option>
+                  <option>Karad</option>
                 </select>
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-label-sm text-label-sm text-on-surface-variant">Village</label>
-                <input className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full" type="text" defaultValue="Malegaon Bk" />
+                <input className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full" type="text" value={village} onChange={e => setVillage(e.target.value)} />
               </div>
               <div className="flex flex-col gap-2">
                 <label className="font-label-sm text-label-sm text-on-surface-variant">Gat No.</label>
-                <input className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full" type="text" defaultValue="452/B" />
+                <input className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full" type="text" value={gatNo} onChange={e => setGatNo(e.target.value)} />
               </div>
             </div>
             
             <div className="flex flex-col gap-2 mt-unit relative z-10">
               <label className="font-label-sm text-label-sm text-on-surface-variant">Total Area (Hectares)</label>
-              <input className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full" step="0.1" type="number" defaultValue="2.5" />
+              <input className="bg-surface-container-high/40 border-0 border-b border-outline-variant text-on-surface focus:ring-0 focus:border-primary px-0 py-2 w-full" step="0.1" type="number" value={area} onChange={e => setArea(e.target.value)} />
             </div>
             
             <button 
@@ -94,7 +123,7 @@ const FarmManager = () => {
                 <span className="bg-primary-container/20 text-primary-fixed backdrop-blur-md px-3 py-1 rounded-full font-label-sm text-label-sm border border-primary/30 inline-flex items-center gap-1">
                   <span className="material-symbols-outlined text-[16px]">location_on</span> Verified Plot
                 </span>
-                <h3 className="font-h3 text-h3 text-on-surface mt-2 drop-shadow-md">Gat 452/B, Baramati</h3>
+                <h3 className="font-h3 text-h3 text-on-surface mt-2 drop-shadow-md">Gat {gatNo}, {taluka}</h3>
               </div>
               <button className="bg-surface/80 backdrop-blur-md p-2 rounded-full border border-outline-variant text-primary hover:bg-surface-container transition-colors">
                 <span className="material-symbols-outlined">fullscreen</span>
@@ -110,7 +139,7 @@ const FarmManager = () => {
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
               Agri AI Insights
             </h2>
-            <span className="font-label-sm text-label-sm text-secondary">Sugarcane • Day 45</span>
+            <span className="font-label-sm text-label-sm text-secondary">{crop} • Day 45</span>
           </div>
           
           <div className="grid grid-cols-1 gap-unit">
@@ -134,7 +163,7 @@ const FarmManager = () => {
                 <h4 className="font-label-sm text-label-sm text-on-surface">Fertilizer Action</h4>
                 <p className="font-body-md text-body-md text-on-surface-variant mt-1 text-sm">Apply Nitrogen top-dressing (Urea 50kg/acre) before upcoming light showers projected for Thursday.</p>
                 <button
-                  onClick={() => navigate('/feature/market-prices')}
+                  onClick={() => navigate('/market-prices')}
                   className="mt-3 text-primary font-label-sm text-label-sm border border-primary px-4 py-1.5 rounded-lg hover:bg-primary/10 transition-colors inline-block"
                 >
                   View Market Prices
@@ -153,7 +182,7 @@ const FarmManager = () => {
           <div className="bg-[#064E3B]/60 backdrop-blur-[20px] rounded-xl p-card-padding border border-[rgba(240,253,250,0.1)] flex flex-col gap-gutter">
             <div className="flex justify-between items-end border-b border-white/10 pb-4">
               <div>
-                <p className="font-label-sm text-label-sm text-on-surface-variant">Est. Yield (Sugarcane)</p>
+                <p className="font-label-sm text-label-sm text-on-surface-variant">Est. Yield ({crop})</p>
                 <p className="font-h2 text-h2 text-on-surface mt-1">120 <span className="text-lg font-normal text-on-surface-variant">Tons</span></p>
               </div>
               <div className="text-right">
