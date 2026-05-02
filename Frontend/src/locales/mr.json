@@ -1,0 +1,104 @@
+{
+  "brand": "AgriGrowth",
+  "tagline": "तुमचा स्मार्ट शेती मित्र",
+  "common": {
+    "home": "होम",
+    "scan": "स्कॅन",
+    "farm": "फार्म",
+    "profile": "प्रोफाइल",
+    "result": "निकाल",
+    "backToHome": "होमवर परत जा",
+    "backToProfile": "प्रोफाइलवर परत जा",
+    "language": "भाषा",
+    "help": "मदत"
+  },
+  "splash": {
+    "initializing": "सिस्टम सुरू होत आहे..."
+  },
+  "auth": {
+    "loginSubtitle": "तुमच्या कृषी कमांड सेंटरसाठी सुरक्षित प्रवेश.",
+    "identifier": "फोन नंबर किंवा फार्म आयडी",
+    "identifierPlaceholder": "तुमची माहिती भरा",
+    "password": "पासवर्ड",
+    "forgot": "विसरलात?",
+    "loginButton": "डॅशबोर्डमध्ये लॉगिन करा",
+    "newTo": "AgriGrowth मध्ये नवीन आहात?",
+    "createAccount": "खाते तयार करा",
+    "signupTitle": "खाते तयार करा",
+    "signupSubtitle": "AgriGrowth मध्ये सामील व्हा आणि तुमचे शेत व्यवस्थापन सुरू करा.",
+    "fullName": "पूर्ण नाव",
+    "fullNamePlaceholder": "उदा. राम देशमुख",
+    "phoneNumber": "फोन नंबर",
+    "location": "शेतीचे ठिकाण",
+    "locationPlaceholder": "शहर, राज्य किंवा पिन कोड",
+    "alreadyAccount": "आधीच खाते आहे?",
+    "logIn": "लॉगिन करा",
+    "termsText": "खाते तयार करून तुम्ही आमच्या",
+    "terms": "सेवा अटी",
+    "privacy": "गोपनीयता धोरण"
+  },
+  "homePage": {
+    "welcome": "नमस्कार, राज",
+    "healthy": "आज तुमचे शेत निरोगी दिसत आहे.",
+    "currentWeather": "सध्याचे हवामान",
+    "partlyCloudy": "आंशिक ढगाळ • आर्द्रता 65%",
+    "wind": "वारा",
+    "rainProb": "पावसाची शक्यता",
+    "soilTemp": "मातीचे तापमान",
+    "scanSoil": "माती स्कॅन",
+    "scanSoilDesc": "मातीचे आरोग्य पटकन तपासा.",
+    "govtSchemes": "शासकीय योजना",
+    "govtSchemesDesc": "नवीन अनुदान आणि सबसिडी.",
+    "weatherAlerts": "हवामान सूचना",
+    "weatherAlertsDesc": "1 सक्रिय सूचना.",
+    "quickInsights": "त्वरित माहिती"
+  },
+  "scanPage": {
+    "title": "स्कॅन प्रकार निवडा",
+    "subtitle": "माती विश्लेषण आणि पिक रोग निदानासाठी वेगळे साधन वापरा.",
+    "soilTitle": "माती स्कॅन",
+    "soilDesc": "आर्द्रता, pH आणि पोषक नमुना विश्लेषण करा.",
+    "cropTitle": "पीक स्कॅन",
+    "cropDesc": "पिकाचा रोग आणि उपाय योजना ओळखा."
+  },
+  "soilScan": {
+    "title": "माती स्कॅन",
+    "analyzer": "माती आरोग्य विश्लेषक",
+    "subtitle": "पोषकद्रव्य आणि आर्द्रता माहितीसाठी मातीचा फोटो अपलोड करा.",
+    "uploadHint": "सुरू करण्यासाठी मातीचा नमुना फोटो अपलोड करा.",
+    "selectedFile": "निवडलेली फाइल: {{fileName}}",
+    "analyze": "माती विश्लेषण करा",
+    "result": "मातीतील आर्द्रता मध्यम आहे आणि pH तटस्थ आहे. पुढील पाण्याबरोबर कंपोस्ट द्या."
+  },
+  "cropScan": {
+    "title": "पीक स्कॅन",
+    "analyzer": "पीक रोग स्कॅनर",
+    "subtitle": "रोग निदान आणि उपाय सूचनांसाठी पिकाचा फोटो अपलोड करा.",
+    "uploadHint": "रोग ओळखण्यासाठी पिकाचा फोटो अपलोड करा.",
+    "selectedFile": "निवडलेली फाइल: {{fileName}}",
+    "analyze": "पीक विश्लेषण करा",
+    "result": "संभाव्य समस्या: लीफ रस्ट (उच्च विश्वासार्हता). शिफारस: सेंद्रिय बुरशीनाशक वापरा.",
+    "orderSupplies": "साहित्य मागवा"
+  },
+  "feature": {
+    "defaultTitle": "फीचर",
+    "defaultDescription": "हे फीचर उपलब्ध आहे आणि प्रत्यक्ष बॅकएंड डेटासाठी तयार आहे.",
+    "myProfileTitle": "माझे प्रोफाइल",
+    "myProfileDesc": "तुमची शेतकरी प्रोफाइल माहिती पहा आणि व्यवस्थापित करा.",
+    "historyTitle": "इतिहास",
+    "historyDesc": "तुमचे मागील स्कॅन, सल्ले आणि कृती पहा.",
+    "govtSchemesTitle": "शासकीय योजना",
+    "govtSchemesDesc": "सबसिडी, अनुदान आणि पात्रता माहिती पहा.",
+    "languageSettingsTitle": "भाषा सेटिंग्ज",
+    "languageSettingsDesc": "अॅपची पसंतीची भाषा निवडा.",
+    "helpTitle": "मदत",
+    "helpDesc": "सहाय्य, FAQ आणि संपर्क माहिती मिळवा.",
+    "weatherAlertsTitle": "हवामान सूचना",
+    "weatherAlertsDesc": "तुमच्या भागातील सक्रिय हवामान सूचना पहा.",
+    "marketPricesTitle": "बाजारभाव",
+    "marketPricesDesc": "मंडी आणि पिकांचे चालू बाजारभाव पहा.",
+    "suppliesTitle": "साहित्य",
+    "suppliesDesc": "पीक संरक्षण आणि शेती साहित्य मागवा."
+  }
+}
+
