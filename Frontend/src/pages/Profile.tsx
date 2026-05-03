@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import BottomNav from '../components/BottomNav';
 import TopBar from '../components/TopBar';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [user, setUser] = useState<{name: string, email: string} | null>(null);
 
   useEffect(() => {
@@ -58,7 +60,7 @@ const Profile = () => {
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>person</span>
             </div>
             <div className="flex-1">
-              <span className="font-label-sm text-label-sm text-on-surface block">My Profile</span>
+              <span className="font-label-sm text-label-sm text-on-surface block">{t('profile.myProfile')}</span>
             </div>
             <span className="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
           </Link>
@@ -68,7 +70,7 @@ const Profile = () => {
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>history</span>
             </div>
             <div className="flex-1">
-              <span className="font-label-sm text-label-sm text-on-surface block">History</span>
+              <span className="font-label-sm text-label-sm text-on-surface block">{t('profile.history')}</span>
             </div>
             <span className="material-symbols-outlined text-outline-variant group-hover:text-secondary transition-colors">chevron_right</span>
           </Link>
@@ -78,7 +80,7 @@ const Profile = () => {
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>account_balance</span>
             </div>
             <div className="flex-1">
-              <span className="font-label-sm text-label-sm text-on-surface block">Govt Schemes</span>
+              <span className="font-label-sm text-label-sm text-on-surface block">{t('profile.govtSchemes')}</span>
             </div>
             <span className="material-symbols-outlined text-outline-variant group-hover:text-tertiary transition-colors">chevron_right</span>
           </Link>
@@ -88,7 +90,7 @@ const Profile = () => {
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>translate</span>
             </div>
             <div className="flex-1">
-              <span className="font-label-sm text-label-sm text-on-surface block">Language Settings</span>
+              <span className="font-label-sm text-label-sm text-on-surface block">{t('profile.languageSettings')}</span>
             </div>
             <span className="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
           </Link>
@@ -98,7 +100,7 @@ const Profile = () => {
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>help</span>
             </div>
             <div className="flex-1">
-              <span className="font-label-sm text-label-sm text-on-surface block">Help</span>
+              <span className="font-label-sm text-label-sm text-on-surface block">{t('profile.help')}</span>
             </div>
             <span className="material-symbols-outlined text-outline-variant group-hover:text-on-surface transition-colors">chevron_right</span>
           </Link>
@@ -111,7 +113,7 @@ const Profile = () => {
             className="w-full bg-error/10 hover:bg-error/20 border border-error/30 text-error rounded-xl py-4 flex items-center justify-center gap-2 font-label-sm text-label-sm transition-transform active:scale-[0.98]"
           >
             <span className="material-symbols-outlined">logout</span>
-            Logout
+            {t('profile.logout')}
           </button>
         </section>
       </main>

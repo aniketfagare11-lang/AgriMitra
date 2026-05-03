@@ -111,5 +111,32 @@
     "marketPricesDesc": "Check current mandi and crop market rates.",
     "suppliesTitle": "Supplies",
     "suppliesDesc": "Order crop protection and farm input supplies."
+  },
+  "profile": {
+    "title": "Profile",
+    "myProfile": "My Profile",
+    "history": "History",
+    "govtSchemes": "Govt Schemes",
+    "languageSettings": "Language Settings",
+    "help": "Help",
+    "logout": "Logout"
+  },
+  "farm": {
+    "title": "Farm Manager",
+    "subtitle": "Manage your plot details and insights.",
+    "landDetails": "7/12 Land Details",
+    "district": "District",
+    "taluka": "Taluka",
+    "village": "Village",
+    "gatNo": "Gat No.",
+    "area": "Total Area (Hectares)",
+    "sync": "Sync 7/12 Records",
+    "syncing": "Syncing...",
+    "synced": "Synced",
+    "aiInsights": "Agri AI Insights",
+    "irrigation": "Irrigation Advisory",
+    "fertilizer": "Fertilizer Action",
+    "yieldTitle": "Yield & Income Projection",
+    "viewMarket": "View Market Prices"
   }
 }
