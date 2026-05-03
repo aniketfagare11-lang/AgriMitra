@@ -10,8 +10,19 @@ const langMap = {
   mr: 'mr'
 };
 
+const cleanTextForTTS = (text) => {
+  return text
+    .replace(/\*\*/g, '')          // Remove bold **
+    .replace(/\*/g, '')           // Remove single *
+    .replace(/^\d+\.\s+/gm, '')   // Remove "1. ", "2. " at start of lines
+    .replace(/\n/g, ' ')          // Replace newlines with spaces for flow
+    .replace(/\s+/g, ' ')         // Collapse multiple spaces
+    .trim();
+};
+
 router.post('/', async (req, res) => {
-  const text = (req.body.text || '').toString().trim();
+  const rawText = (req.body.text || '').toString();
+  const text = cleanTextForTTS(rawText);
   const language = (req.body.language || 'en').toString().toLowerCase();
 
   if (!text) {

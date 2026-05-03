@@ -96,15 +96,28 @@ const VoiceNavigator = ({ language = 'en-IN' }) => {
     }
   }, []);
 
-  const startListening = useCallback(() => {
+  const startListening = useCallback(async () => {
     if (!recognitionRef.current || isListeningRef.current) return;
+    
+    // On mobile, explicitly requesting media access can help wake up the mic hardware
+    try {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+      }
+    } catch (e) {
+      console.warn('Mic permission denied or unavailable', e);
+    }
+
     recognitionRef.current.lang = buildLanguage(language);
     try {
       recognitionRef.current.start();
       isListeningRef.current = true;
       window.dispatchEvent(new CustomEvent('voice-nav-start'));
       dispatchToast('🎙️ Listening…');
-    } catch (_) {}
+    } catch (e) {
+      console.error('Speech recognition start failed', e);
+      isListeningRef.current = false;
+    }
   }, [language]);
 
   const toggleListening = useCallback(() => {

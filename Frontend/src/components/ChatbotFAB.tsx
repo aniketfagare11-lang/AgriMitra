@@ -101,12 +101,21 @@ const ChatbotFAB: React.FC = () => {
     };
   }, [i18n.language]);
 
-  const toggleListen = () => {
+  const toggleListen = async () => {
     if (isListening) {
       recognitionRef.current?.stop();
       setIsListening(false);
     } else {
       if (recognitionRef.current) {
+        // On mobile, explicitly requesting media access helps wake up the mic hardware
+        try {
+          if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            await navigator.mediaDevices.getUserMedia({ audio: true });
+          }
+        } catch (e) {
+          console.warn('Mic permission denied or unavailable', e);
+        }
+
         // Update language before starting
         const getLang = () => {
           const base = i18n.language.split('-')[0];
@@ -121,7 +130,8 @@ const ChatbotFAB: React.FC = () => {
           recognitionRef.current.start();
           setIsListening(true);
         } catch (e) {
-          console.error(e);
+          console.error('Speech recognition failed to start', e);
+          setIsListening(false);
         }
       } else {
         alert(t('Voice input is not supported in your browser.', 'Voice input is not supported in your browser.'));
