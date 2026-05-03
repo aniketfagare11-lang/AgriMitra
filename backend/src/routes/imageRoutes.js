@@ -14,9 +14,25 @@ const modePrompt = (mode, languageCode) => {
   const targetLanguage = langMap[languageCode] || 'English';
 
   if (mode === 'soil') {
-    return `Analyze this soil image. Respond only in ${targetLanguage}. Return concise output with: 1) soil condition, 2) probable issue, 3) confidence 0-100, 4) immediate action, 5) next 3 steps.`;
+    return `Analyze this soil image. Respond ONLY in ${targetLanguage}.
+If the image is not a clear soil image, return EXACTLY: "Image unclear. Please upload a clearer soil image."
+Otherwise, your output MUST exactly follow this structure and nothing else:
+- Moisture: [Low / Normal / High]
+- Nitrogen: [Low / Normal / High]
+- pH: [Low / Normal / High]
+- Issue: [1 short sentence]
+- Solution: [2-3 actionable steps]
+- Confidence: [e.g. 60-75%] (Estimated)`;
   }
-  return `Analyze this crop image. Respond only in ${targetLanguage}. Return concise output with: 1) probable disease/stress, 2) confidence 0-100, 3) immediate treatment, 4) prevention tips in 3 bullets.`;
+  
+  return `Analyze this crop image. Respond ONLY in ${targetLanguage}.
+If the image is not a clear crop/plant image, return EXACTLY: "Image unclear. Please upload a clearer crop image."
+Otherwise, return concise output with:
+1) probable disease/stress
+2) Confidence: [e.g. 60-75%] (Estimated)
+3) cause of the issue
+4) immediate treatment
+5) prevention tips in 3 bullets.`;
 };
 
 router.post('/analyze', upload.single('image'), async (req, res) => {

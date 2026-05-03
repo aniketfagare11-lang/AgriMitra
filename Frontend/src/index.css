@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Utility: hide scrollbar (used in horizontal filter strips) ─────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
 @layer base {
   .theme {
     --font-heading: var(--font-sans);
@@ -80,8 +84,40 @@
   }
   body {
     @apply bg-background text-on-background;
+    /* Outer chrome — dark background visible on desktop sides */
+    background-color: #071410 !important;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
   html {
     @apply font-sans;
   }
 }
+
+/* ── Mobile app shell ─────────────────────────────────────────────────────── */
+#root {
+  width: 100%;
+  max-width: 420px;
+  min-height: 100vh;
+  background-color: #0B1F17;
+  position: relative;
+  /* Desktop: phone-on-desk look */
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.04),
+              0 20px 60px rgba(0, 0, 0, 0.6),
+              0 4px 16px rgba(0, 0, 0, 0.4);
+  /* Safe area insets for iOS */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* On true mobile screens, no shadow needed */
+@media (max-width: 440px) {
+  #root {
+    max-width: 100%;
+    box-shadow: none;
+  }
+  body {
+    display: block;
+  }
+}

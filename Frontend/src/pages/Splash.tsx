@@ -39,9 +39,9 @@ const Splash = () => {
             </span>
           </div>
           {/* Brand Name & Tagline */}
-          <div className="text-center space-y-2">
-            <h1 className="font-h1 text-h1 text-on-surface">{t('brand')}</h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant">{t('tagline')}</p>
+          <div className="text-center flex flex-col items-center mt-6">
+            <h1 className="font-bold text-4xl text-emerald-50 tracking-tight">{t('brand')}</h1>
+            <p className="text-[15px] font-medium text-emerald-400/80 tracking-wide mt-2">Your Smart Farming Mitra</p>
           </div>
         </div>
         

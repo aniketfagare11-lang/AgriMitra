@@ -23,7 +23,7 @@ const History = () => {
         const token = localStorage.getItem('token');
         if (!token) return;
 
-        const response = await fetch('http://localhost:5000/api/farm', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/farm`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
