@@ -111,6 +111,32 @@
     "marketPricesDesc": "मंडी आणि पिकांचे चालू बाजारभाव पहा.",
     "suppliesTitle": "साहित्य",
     "suppliesDesc": "पीक संरक्षण आणि शेती साहित्य मागवा."
+  },
+  "profile": {
+    "title": "प्रोफाइल",
+    "myProfile": "माझे प्रोफाइल",
+    "history": "इतिहास",
+    "govtSchemes": "शासकीय योजना",
+    "languageSettings": "भाषा सेटिंग्ज",
+    "help": "मदत",
+    "logout": "लॉगआउट"
+  },
+  "farm": {
+    "title": "फार्म मॅनेजर",
+    "subtitle": "तुमच्या शेताची माहिती आणि सूचना पहा.",
+    "landDetails": "7/12 जमीन तपशील",
+    "district": "जिल्हा",
+    "taluka": "तालुका",
+    "village": "गाव",
+    "gatNo": "गट क्रमांक",
+    "area": "एकूण क्षेत्र (हेक्टर)",
+    "sync": "7/12 नोंदी सिंक करा",
+    "syncing": "सिंक होत आहे...",
+    "synced": "सिंक झाले",
+    "aiInsights": "शेती AI सूचना",
+    "irrigation": "सिंचन सल्ला",
+    "fertilizer": "खत कृती",
+    "yieldTitle": "उत्पन्न आणि उत्पादन अंदाज",
+    "viewMarket": "बाजारभाव पहा"
   }
 }
-

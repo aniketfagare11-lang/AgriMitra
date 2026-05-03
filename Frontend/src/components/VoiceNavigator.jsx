@@ -1,13 +1,18 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 const COMMANDS = [
-  { keywords: ['soil', 'मिट्टी', 'ಮಣ್ಣು', 'माती'], path: '/soil-scan' },
-  { keywords: ['scan', 'crop', 'फसल', 'ಬೆಳೆ', 'पीक'], path: '/crop-scan' },
-  { keywords: ['weather', 'मौसम', 'ಹವಾಮಾನ', 'हवामान'], path: '/weather' },
-  { keywords: ['farm', 'खेत', 'ಕೃಷಿ', 'शेती'], path: '/farm' },
-  { keywords: ['home', 'होम', 'ಮನೆ', 'मुख्य'], path: '/home' },
+  { keywords: ['home', 'होम', 'ಮನೆ', 'मुख्य', 'mukhya'], path: '/home', label: 'Home' },
+  { keywords: ['scan', 'crop', 'फसल', 'ಬೆಳೆ', 'पीक', 'peek', 'fassal'], path: '/crop-scan', label: 'Crop Scan' },
+  { keywords: ['soil', 'मिट्टी', 'ಮಣ್ಣು', 'माती', 'mati'], path: '/soil-scan', label: 'Soil Scan' },
+  { keywords: ['weather', 'मौसम', 'ಹವಾಮಾನ', 'हवामान', 'hawaman', 'mausam'], path: '/weather-alerts', label: 'Weather' },
+  { keywords: ['farm', 'खेत', 'ಕೃಷಿ', 'शेती', 'sheti', 'khet'], path: '/farm-manager', label: 'Farm Manager' },
+  { keywords: ['market', 'prices', 'bazaar', 'बाजार', 'ಮಾರುಕಟ್ಟೆ'], path: '/market-prices', label: 'Market Prices' },
+  { keywords: ['scheme', 'yojana', 'योजना', 'ಯೋಜನೆ', 'government', 'sarkar'], path: '/govt-schemes', label: 'Govt Schemes' },
+  { keywords: ['profile', 'account', 'खाता', 'ಖಾತೆ', 'khata'], path: '/profile', label: 'Profile' },
+  { keywords: ['history', 'records', 'इतिहास', 'ಇತಿಹಾಸ'], path: '/history', label: 'History' },
+  { keywords: ['help', 'मदद', 'ಸಹಾಯ', 'madad', 'sahay'], path: '/help', label: 'Help' },
 ];
 
 const getSpeechRecognition = () =>
@@ -18,82 +23,70 @@ const buildLanguage = (language) => {
   return supported.includes(language) ? language : 'en-IN';
 };
 
+const AUTH_PATHS = ['/', '/login', '/signup'];
+
+// ─── Toast shown by TopBar mic button (dispatched via custom event) ────────────
+const dispatchToast = (msg) =>
+  window.dispatchEvent(new CustomEvent('voice-toast', { detail: msg }));
+
 const VoiceNavigator = ({ language = 'en-IN' }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { i18n } = useTranslation();
   const recognitionRef = useRef(null);
   const isListeningRef = useRef(false);
 
   const speakOut = useCallback(async (text) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tts`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, language: i18n.language })
+        body: JSON.stringify({ text, language: i18n.language }),
       });
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const audio = new Audio(url);
-        audio.play();
+      if (res.ok) {
+        const url = URL.createObjectURL(await res.blob());
+        new Audio(url).play();
       }
-    } catch (err) {
-      console.error('TTS error:', err);
-    }
+    } catch (_) {}
   }, [i18n.language]);
 
-  const handleCommand = useCallback(
-    (transcript) => {
-      const spoken = transcript.toLowerCase().trim();
-      const spokenNoSpace = spoken.replace(/\s+/g, '');
-      
-      // Language switching
-      if (['marathi', 'मराठी'].some(k => spokenNoSpace.includes(k))) { 
-        speakOut("मराठी भाषा निवडली"); 
-        i18n.changeLanguage('mr'); 
-        return true; 
-      }
-      if (['hindi', 'हिंदी'].some(k => spokenNoSpace.includes(k))) { 
-        speakOut("हिंदी भाषा चुनी गई"); 
-        i18n.changeLanguage('hi'); 
-        return true; 
-      }
-      if (['kannada', 'ಕನ್ನಡ'].some(k => spokenNoSpace.includes(k))) { 
-        speakOut("ಕನ್ನಡ ಭಾಷೆ ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ"); 
-        i18n.changeLanguage('kn'); 
-        return true; 
-      }
-      if (['english', 'अंग्रेजी'].some(k => spokenNoSpace.includes(k))) { 
-        speakOut("Switching to English"); 
-        i18n.changeLanguage('en'); 
-        return true; 
-      }
-      
-      // Chatbot
-      if (['chatbot', 'चैटबॉट', 'ಚಾಟ್‌ಬಾಟ್', 'चाटबॉट', 'chat'].some(k => spokenNoSpace.includes(k))) {
-        speakOut(i18n.language.startsWith('en') ? "Opening Chatbot" : (i18n.language.startsWith('hi') ? "चैटबॉट खोल रहा है" : "चॅटबॉट उघडत आहे"));
-        window.dispatchEvent(new CustomEvent('open-chatbot'));
+  const handleCommand = useCallback((transcript) => {
+    const ns = transcript.toLowerCase().trim().replace(/\s+/g, '');
+
+    if (['marathi', 'मराठी'].some(k => ns.includes(k))) {
+      speakOut('मराठी भाषा निवडली'); i18n.changeLanguage('mr');
+      dispatchToast('🌐 Marathi'); return true;
+    }
+    if (['hindi', 'हिंदी'].some(k => ns.includes(k))) {
+      speakOut('हिंदी भाषा चुनी गई'); i18n.changeLanguage('hi');
+      dispatchToast('🌐 Hindi'); return true;
+    }
+    if (['english', 'अंग्रेजी', 'angrezi'].some(k => ns.includes(k))) {
+      speakOut('Switching to English'); i18n.changeLanguage('en');
+      dispatchToast('🌐 English'); return true;
+    }
+
+    if (['chatbot', 'chat', 'चैटबॉट', 'ಚಾಟ್‌ಬಾಟ್', 'चाटबॉट'].some(k => ns.includes(k))) {
+      const msg = i18n.language.startsWith('mr') ? 'चॅटबॉट उघडत आहे' : i18n.language.startsWith('hi') ? 'चैटबॉट खोल रहा है' : 'Opening Chatbot';
+      speakOut(msg);
+      dispatchToast('💬 Chatbot');
+      window.dispatchEvent(new CustomEvent('open-chatbot'));
+      return true;
+    }
+
+    for (const cmd of COMMANDS) {
+      if (cmd.keywords.some(kw => ns.includes(kw.replace(/\s+/g, '')))) {
+        const msg = i18n.language.startsWith('mr') ? `${cmd.label} उघडत आहे` : i18n.language.startsWith('hi') ? `${cmd.label} खोल रहा है` : `Opening ${cmd.label}`;
+        speakOut(msg);
+        dispatchToast(`→ ${cmd.label}`);
+        navigate(cmd.path);
         return true;
       }
+    }
 
-      for (const command of COMMANDS) {
-        if (command.keywords.some((keyword) => spokenNoSpace.includes(keyword.replace(/\s+/g, '')))) {
-          let reply = "Opening " + command.path.replace('/', '');
-          if (command.path === '/soil-scan') reply = "Opening Soil Scan";
-          if (command.path === '/crop-scan') reply = "Opening Crop Scan";
-          if (command.path === '/home') reply = "Opening Home";
-          if (command.path === '/farm') reply = "Opening Farm Manager";
-          if (command.path === '/weather') reply = "Opening Weather";
-          
-          speakOut(reply);
-          navigate(command.path);
-          return true;
-        }
-      }
-      return false;
-    },
-    [navigate, i18n, speakOut]
-  );
+    dispatchToast('❓ Try: "home", "scan", "weather"…');
+    return false;
+  }, [navigate, i18n, speakOut]);
 
   const stopListening = useCallback(() => {
     if (recognitionRef.current && isListeningRef.current) {
@@ -110,77 +103,47 @@ const VoiceNavigator = ({ language = 'en-IN' }) => {
       recognitionRef.current.start();
       isListeningRef.current = true;
       window.dispatchEvent(new CustomEvent('voice-nav-start'));
-    } catch(e) {}
+      dispatchToast('🎙️ Listening…');
+    } catch (_) {}
   }, [language]);
 
   const toggleListening = useCallback(() => {
-    if (isListeningRef.current) {
-      stopListening();
-      return;
-    }
+    if (isListeningRef.current) { stopListening(); return; }
     startListening();
   }, [startListening, stopListening]);
 
   useEffect(() => {
-    const SpeechRecognition = getSpeechRecognition();
-    if (!SpeechRecognition) {
-      console.warn('Voice navigation is not supported in this browser.');
-      return;
-    }
+    const SR = getSpeechRecognition();
+    if (!SR) return;
 
-    const recognition = new SpeechRecognition();
+    const recognition = new SR();
     recognition.continuous = true;
     recognition.interimResults = false;
     recognition.lang = buildLanguage(language);
-
-    recognition.onresult = (event) => {
-      const result = event.results[event.results.length - 1];
-      const transcript = result?.[0]?.transcript ?? '';
-      if (transcript) {
-        handleCommand(transcript);
-      }
+    recognition.onresult = (e) => {
+      const t = e.results[e.results.length - 1]?.[0]?.transcript ?? '';
+      if (t) handleCommand(t);
     };
-
-    recognition.onend = () => {
-      // Keep listening continuously only when voice mode is still active.
-      if (isListeningRef.current) {
-        recognition.start();
-      }
-    };
-
-    recognition.onerror = () => {
-      if (isListeningRef.current) {
-        recognition.stop();
-        recognition.start();
-      }
-    };
+    recognition.onend = () => { if (isListeningRef.current) recognition.start(); };
+    recognition.onerror = () => { if (isListeningRef.current) { recognition.stop(); recognition.start(); } };
 
     recognitionRef.current = recognition;
 
-    const onKeyDown = (event) => {
-      // Simple microphone control without changing existing UI.
-      if (event.altKey && event.key.toLowerCase() === 'm') {
-        toggleListening();
-      }
-    };
-
-    window.addEventListener('keydown', onKeyDown);
-    window.voiceNavigatorControl = {
-      start: startListening,
-      stop: stopListening,
-      toggle: toggleListening,
-    };
+    const onKey = (e) => { if (e.altKey && e.key.toLowerCase() === 'm') toggleListening(); };
+    window.addEventListener('keydown', onKey);
+    window.voiceNavigatorControl = { start: startListening, stop: stopListening, toggle: toggleListening };
 
     return () => {
-      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keydown', onKey);
       stopListening();
       recognitionRef.current = null;
       delete window.voiceNavigatorControl;
     };
   }, [handleCommand, language, startListening, stopListening, toggleListening]);
 
+  // Logic-only — mic button is rendered inside TopBar
+  if (AUTH_PATHS.includes(location.pathname)) return null;
   return null;
 };
 
 export default VoiceNavigator;
-

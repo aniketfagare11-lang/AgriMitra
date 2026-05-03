@@ -19,6 +19,7 @@ const ChatbotFAB: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [playingAudioIndex, setPlayingAudioIndex] = useState<number | null>(null);
+  const [weatherContext, setWeatherContext] = useState<any>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
@@ -70,6 +71,28 @@ const ChatbotFAB: React.FC = () => {
     const handleOpenChatbot = () => setIsOpen(true);
     window.addEventListener('open-chatbot', handleOpenChatbot);
 
+    // Fetch location & weather context for the chatbot
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+        try {
+          const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coords.latitude}&longitude=${coords.longitude}&current=temperature_2m,weather_code&timezone=auto`);
+          const data = await res.json();
+          const code = data.current.weather_code;
+          let cond = 'Clear';
+          if (code >= 1 && code <= 3) cond = 'Partly Cloudy';
+          if (code >= 51 && code <= 67) cond = 'Rainy';
+          if (code >= 95) cond = 'Thunderstorm';
+          
+          setWeatherContext({
+            temp: Math.round(data.current.temperature_2m),
+            condition: cond,
+            lat: coords.latitude.toFixed(2),
+            lon: coords.longitude.toFixed(2)
+          });
+        } catch (e) { console.error('Chatbot weather fetch failed', e); }
+      });
+    }
+
     return () => {
       window.removeEventListener('open-chatbot', handleOpenChatbot);
       if (audioRef.current) {
@@ -113,7 +136,7 @@ const ChatbotFAB: React.FC = () => {
     
     setPlayingAudioIndex(index);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tts`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, language: i18n.language })
@@ -143,12 +166,13 @@ const ChatbotFAB: React.FC = () => {
     setIsTyping(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/chat`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: newMessages.map(m => ({ role: m.role, content: m.content })),
-          language: i18n.language
+          language: i18n.language,
+          weatherContext: weatherContext
         })
       });
 

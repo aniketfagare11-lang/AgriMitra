@@ -214,7 +214,7 @@ const SoilScan = () => {
     if (!text.trim()) return;
     setIsSpeaking(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tts`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, language: i18n.language.split('-')[0] }),
@@ -271,7 +271,7 @@ const SoilScan = () => {
       formData.append('mode', 'soil');
       formData.append('language', i18n.language.split('-')[0]);
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/image/analyze`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/image/analyze`, {
         method: 'POST',
         body: formData,
       });
@@ -343,29 +343,37 @@ const SoilScan = () => {
           </p>
 
           {/* Hidden inputs */}
-          <input ref={cameraRef}  type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileChange} />
-          <input ref={galleryRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+          <input ref={galleryRef} type="file" accept="image/*" className="hidden" id="soil-gallery" onChange={handleFileChange} />
 
           {/* Two prominent buttons */}
           {!previewUrl && (
             <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => cameraRef.current?.click()}
-                className="flex flex-col items-center gap-2 py-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 active:scale-[0.97] transition-all"
+              {/* Camera: label wraps a dedicated input so capture fires reliably */}
+              <label
+                htmlFor="soil-camera"
+                className="flex flex-col items-center gap-2 py-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 active:scale-[0.97] transition-all cursor-pointer"
               >
+                <input
+                  id="soil-camera"
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
                 <span className="material-symbols-outlined text-[32px] text-emerald-400" style={{ fontVariationSettings: "'FILL' 1" }}>photo_camera</span>
                 <span className="text-sm font-semibold text-white">Take Photo</span>
                 <span className="text-[10px] text-white/40">Use camera</span>
-              </button>
+              </label>
 
-              <button
-                onClick={() => galleryRef.current?.click()}
-                className="flex flex-col items-center gap-2 py-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 active:scale-[0.97] transition-all"
+              <label
+                htmlFor="soil-gallery"
+                className="flex flex-col items-center gap-2 py-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 active:scale-[0.97] transition-all cursor-pointer"
               >
                 <span className="material-symbols-outlined text-[32px] text-sky-400" style={{ fontVariationSettings: "'FILL' 1" }}>photo_library</span>
                 <span className="text-sm font-semibold text-white">Upload Photo</span>
                 <span className="text-[10px] text-white/40">From gallery</span>
-              </button>
+              </label>
             </div>
           )}
 

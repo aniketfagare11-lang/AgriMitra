@@ -109,5 +109,32 @@
     "marketPricesDesc": "मंडी और फसल के वर्तमान बाजार भाव देखें।",
     "suppliesTitle": "सप्लाई",
     "suppliesDesc": "फसल सुरक्षा और कृषि इनपुट सप्लाई ऑर्डर करें।"
+  },
+  "profile": {
+    "title": "प्रोफाइल",
+    "myProfile": "मेरा प्रोफाइल",
+    "history": "इतिहास",
+    "govtSchemes": "सरकारी योजनाएं",
+    "languageSettings": "भाषा सेटिंग्स",
+    "help": "मदद",
+    "logout": "लॉगआउट"
+  },
+  "farm": {
+    "title": "फार्म मैनेजर",
+    "subtitle": "अपने खेत की जानकारी और सुझाव देखें।",
+    "landDetails": "7/12 भूमि विवरण",
+    "district": "जिला",
+    "taluka": "तालुका",
+    "village": "गांव",
+    "gatNo": "गट नंबर",
+    "area": "कुल क्षेत्र (हेक्टेयर)",
+    "sync": "7/12 रिकॉर्ड सिंक करें",
+    "syncing": "सिंक हो रहा है...",
+    "synced": "सिंक हो गया",
+    "aiInsights": "कृषि AI सुझाव",
+    "irrigation": "सिंचाई सलाह",
+    "fertilizer": "उर्वरक कार्रवाई",
+    "yieldTitle": "उपज और आय अनुमान",
+    "viewMarket": "बाजार भाव देखें"
   }
 }

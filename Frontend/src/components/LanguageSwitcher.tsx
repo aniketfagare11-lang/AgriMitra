@@ -13,7 +13,6 @@ const LanguageSwitcher = () => {
     >
       <option value="en" className="bg-[#0B1F17] text-white font-medium">EN</option>
       <option value="hi" className="bg-[#0B1F17] text-white font-medium">हिंदी</option>
-      <option value="kn" className="bg-[#0B1F17] text-white font-medium">ಕನ್ನಡ</option>
       <option value="mr" className="bg-[#0B1F17] text-white font-medium">मराठी</option>
     </select>
   );

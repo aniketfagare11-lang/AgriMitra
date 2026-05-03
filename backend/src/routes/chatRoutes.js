@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
     return res.status(500).json({ ok: false, message: 'GROQ_API_KEY is missing in backend .env' });
   }
 
-  const { messages, language } = req.body;
+  const { messages, language, weatherContext } = req.body;
   if (!messages || !Array.isArray(messages)) {
     return res.status(400).json({ ok: false, message: 'messages array is required' });
   }
@@ -21,7 +21,11 @@ router.post('/', async (req, res) => {
   const targetLanguage = langMap[(language || 'en').toLowerCase()] || 'English';
 
   try {
-    const systemPrompt = `You are KrushiMitra, a helpful AI assistant for farmers. You must respond ONLY in ${targetLanguage}. Keep your answers concise, practical, and friendly.`;
+    let systemPrompt = `You are KrushiMitra, a helpful AI assistant for farmers. You must respond ONLY in ${targetLanguage}. Keep your answers concise, practical, and friendly.`;
+    
+    if (weatherContext) {
+      systemPrompt += ` The current weather at the user's location (Lat: ${weatherContext.lat}, Lon: ${weatherContext.lon}) is ${weatherContext.temp}°C and ${weatherContext.condition}. Use this information if the user asks about the weather.`;
+    }
     
     const groqResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
