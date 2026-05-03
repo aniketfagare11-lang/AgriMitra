@@ -1,4 +1,4 @@
-import { useMemo, useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import type { ChangeEvent } from 'react';
 import TopBar from '../components/TopBar';
 import BottomNav from '../components/BottomNav';
@@ -108,7 +108,7 @@ const parseAnalysis = (rawText: string): ParsedResult => {
   const trimmedActions = actions.slice(0, 4);
 
   // ── Health status ─────────────────────────────────────────────────────────
-  const lowerRaw = rawText.toLowerCase();
+
   let status: ParsedResult['status'] = 'needs-improvement';
   if (/\b(healthy|good condition|excellent|well.?balanced|optimal|no (major )?issue)/i.test(rawText) && trimmedIssues.length === 0) {
     status = 'healthy';
@@ -194,7 +194,7 @@ const SoilScan = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Separate hidden refs for camera vs gallery
-  const cameraRef  = useRef<HTMLInputElement>(null);
+
   const galleryRef = useRef<HTMLInputElement>(null);
 
   // ── Helpers (unchanged logic) ─────────────────────────────────────────────
@@ -249,10 +249,7 @@ const SoilScan = () => {
     event.target.value = ''; // Reset input to allow same file re-selection
   };
 
-  const statusText = useMemo(() => {
-    if (!fileName) return t('soilScan.uploadHint');
-    return t('soilScan.selectedFile', { fileName });
-  }, [fileName, t]);
+
 
   // ── API call (unchanged) ──────────────────────────────────────────────────
   const analyzeSoil = async () => {

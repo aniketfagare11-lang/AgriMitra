@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import type { ChangeEvent } from 'react';
-import { Link } from 'react-router-dom';
+
 import TopBar from '../components/TopBar';
 import BottomNav from '../components/BottomNav';
 import { useTranslation } from 'react-i18next';
@@ -167,7 +167,7 @@ const CropScan = () => {
   const [isSaved, setIsSaved] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const cameraRef = useRef<HTMLInputElement>(null);
+
   const galleryRef = useRef<HTMLInputElement>(null);
 
   const saveReport = async () => {

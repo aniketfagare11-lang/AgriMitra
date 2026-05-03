@@ -34,7 +34,7 @@ const CROPS = [
 ];
 
 // ─── Score each crop against current conditions ────────────────────────────────
-function scoreCrops(avgTemp: number, avgRain: number, isMonsoon: boolean) {
+function scoreCrops(avgTemp: number, _avgRain: number, isMonsoon: boolean) {
   return CROPS.map(crop => {
     let score = 0;
 

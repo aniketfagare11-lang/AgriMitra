@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { useTranslation } from 'react-i18next';
 import TopBar from '../components/TopBar';
 import BottomNav from '../components/BottomNav';
@@ -125,7 +125,6 @@ const CAT_ICONS: Record<Category, string> = {
 
 // ─────────────────────────────────────────────────────────────────────────────
 const GovtSchemes = () => {
-  const navigate = useNavigate();
   const { i18n } = useTranslation();
   const isMr = i18n.language.startsWith('mr') || i18n.language.startsWith('hi');
 

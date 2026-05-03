@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Mic, Volume2, MicOff, Loader2, Bot, Leaf } from 'lucide-react';
+import { X, Send, Mic, Volume2, MicOff, Loader2, Bot, Leaf } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
